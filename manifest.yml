@@ -6,4 +6,4 @@ applications:
     - route: pal-tracker-saish-exhausted-otter.apps.dev.pcf-aws.com
     env:
       WELCOME_MESSAGE: Hello from the review environment
-      JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 11.+ } }'
+      JBP_CONFIG_OPEN_JDK_JRE: "{ jre: { version: 11.+ } }"
