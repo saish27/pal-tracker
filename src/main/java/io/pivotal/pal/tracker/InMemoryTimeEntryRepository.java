@@ -32,8 +32,8 @@ public class InMemoryTimeEntryRepository implements TimeEntryRepository {
         repo.remove(id);
         return entry;
     }
-    public List<TimeEntry> list(){
-        return repo.values().stream().collect(Collectors.toList());
-
+    @Override
+    public List<TimeEntry> list() {
+        return new ArrayList<>(repo.values());
     }
 }
