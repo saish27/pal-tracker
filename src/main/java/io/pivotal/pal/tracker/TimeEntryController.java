@@ -12,7 +12,6 @@ import java.util.List;
 @RequestMapping("/time-entries")
 public class TimeEntryController {
 
-    @Autowired
     private TimeEntryRepository timeEntryRepository;
 
     public TimeEntryController(TimeEntryRepository timeEntryRepository) {
@@ -21,16 +20,17 @@ public class TimeEntryController {
 
     @PostMapping
     public ResponseEntity<TimeEntry> create(@RequestBody TimeEntry timeEntry){
-        return new ResponseEntity<> (timeEntryRepository.create(timeEntry), HttpStatus.CREATED);
+        TimeEntry entry = timeEntryRepository.create(timeEntry);
+        return new ResponseEntity<> (entry, HttpStatus.CREATED);
     }
 
-    @GetMapping(value = "{id}")
+    @GetMapping("{id}")
     public ResponseEntity<TimeEntry> read(@PathVariable long id){
         TimeEntry entry = timeEntryRepository.find(id);
-        if (entry == null ) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }else {
+        if (entry != null ) {
             return new ResponseEntity<> (entry, HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
     }
@@ -40,18 +40,18 @@ public class TimeEntryController {
         return new ResponseEntity<> (timeEntryRepository.list(), HttpStatus.OK);
     }
 
-    @PutMapping(value = "{id}")
+    @PutMapping( "{id}")
     public ResponseEntity<TimeEntry> update(@PathVariable Long id,@RequestBody TimeEntry timeEntry){
         TimeEntry entry = timeEntryRepository.update(id,timeEntry) ;
-        if (entry == null){
-            return new ResponseEntity<> (HttpStatus.NOT_FOUND);
-        }else{
+        if (entry != null){
             return new ResponseEntity<> (entry, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<> (HttpStatus.NOT_FOUND);
         }
 
     }
 
-    @DeleteMapping(value = "{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<TimeEntry> delete(@PathVariable long id){
         timeEntryRepository.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
